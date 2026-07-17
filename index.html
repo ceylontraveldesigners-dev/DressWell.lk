@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DressWell.lk – Dress to Impress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:    #0E0E0E;
+      --charcoal:#1C1C1C;
+      --rose:    #B5616A;
+      --rose-lt: #D4848C;
+      --sand:    #F5F0EB;
+      --cream:   #FAF8F5;
+      --white:   #FFFFFF;
+      --gold:    #C9A84C;
+      --muted:   #8A8078;
+      --text:    #1C1C1C;
+      --border:  #E8E2DC;
+      --green:   #4A7C59;
+      --ff-serif: 'Playfair Display', Georgia, serif;
+      --ff-sans:  'Jost', 'Segoe UI', Arial, sans-serif;
+    }
+
+    body { font-family: var(--ff-sans); color: var(--text); background: var(--cream); font-weight: 400; letter-spacing: .01em; }
+
+    /* ── NAV ────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(14,14,14,.97);
+      backdrop-filter: blur(12px);
+      z-index: 1000; padding: 0 7rem;
+      display: flex; align-items: center; justify-content: space-between; height: 70px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .logo {
+      font-family: var(--ff-serif); font-size: 1.45rem; font-weight: 700;
+      color: var(--white); cursor: pointer; letter-spacing: 2px; font-style: italic;
+    }
+    .logo span { color: var(--gold); font-style: normal; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,.55); text-decoration: none; font-size: .78rem;
+      font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+      transition: color .25s; cursor: pointer;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .cart-btn {
+      background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.25);
+      padding: .45rem 1.1rem; border-radius: 3px; cursor: pointer;
+      font-size: .78rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+      display: flex; align-items: center; gap: .5rem; transition: border-color .2s;
+    }
+    .cart-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .cart-count {
+      background: var(--gold); color: var(--dark); border-radius: 50%;
+      width: 18px; height: 18px; font-size: .65rem; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+
+    /* ── PAGES ──────────────────────────────── */
+    .page { display: none; padding-top: 70px; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ── BUTTONS ────────────────────────────── */
+    .btn {
+      display: inline-block; padding: .85rem 2.2rem; border: none; font-family: var(--ff-sans);
+      font-size: .78rem; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase;
+      cursor: pointer; text-decoration: none; transition: all .25s;
+    }
+    .btn-primary { background: var(--dark); color: var(--white); }
+    .btn-primary:hover { background: var(--rose); }
+    .btn-outline  { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.5); }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); }
+    .btn-dark     { background: var(--dark); color: var(--white); }
+    .btn-full     { width: 100%; }
+
+    /* ── SECTION ────────────────────────────── */
+    .section { padding: 5rem 8rem; }
+    .section-title {
+      font-family: var(--ff-serif); font-size: 2.2rem; font-weight: 600;
+      color: var(--dark); margin-bottom: 2.5rem; text-align: center; letter-spacing: .5px;
+    }
+    .section-title span { color: var(--rose); font-style: italic; }
+    .section-subtitle { text-align: center; color: var(--muted); font-size: .85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: .8rem; }
+
+    /* ── HOME HERO ──────────────────────────── */
+    .hero {
+      position: relative; min-height: 92vh;
+      display: flex; align-items: flex-end;
+      background: var(--dark); color: var(--white); overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('images/Hero Banner Image.png');
+      background-size: cover; background-position: center top;
+      opacity: .75;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(14,14,14,.9) 0%, rgba(14,14,14,.35) 50%, rgba(14,14,14,.1) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; padding: 4rem 4rem 5rem; max-width: 680px; }
+    .hero-eyebrow { font-size: .72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 1.2rem; }
+    .hero h1 {
+      font-family: var(--ff-serif); font-size: 4rem; font-weight: 700; line-height: 1.1;
+      margin-bottom: 1.4rem; color: var(--white);
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero p  { color: rgba(255,255,255,.72); font-size: 1rem; margin-bottom: 2.4rem; max-width: 440px; line-height: 1.8; font-weight: 300; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* ── TRUST BAR ──────────────────────────── */
+    .trust-bar {
+      background: var(--dark); padding: 1rem 7rem;
+      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .trust-item { color: rgba(255,255,255,.45); font-size: .68rem; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+    .trust-sep { color: rgba(201,168,76,.4); margin: 0 .5rem; }
+
+    /* ── COLLECTION CARDS ───────────────────── */
+    .collections-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; max-width: 100%; margin: 0; background: #111; }
+    .collection-card {
+      padding: 4rem 5rem; color: var(--white);
+      cursor: pointer; transition: opacity .3s; position: relative; overflow: hidden;
+      background: var(--dark); min-height: 280px; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .collection-card:hover { opacity: .88; }
+    .collection-card .cc-label { font-size: .6rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.35); font-family: var(--ff-sans); margin-bottom: .8rem; }
+    .collection-card h3 { font-family: var(--ff-serif); font-size: 1.7rem; font-weight: 400; margin-bottom: .6rem; font-style: italic; color: var(--white); }
+    .collection-card p  { color: rgba(255,255,255,.4); margin-bottom: 1.8rem; font-size: .78rem; letter-spacing: .5px; line-height: 1.8; }
+    .collection-card .cc-cta { font-size: .65rem; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.5); font-family: var(--ff-sans); border-bottom: 1px solid rgba(255,255,255,.2); display: inline-block; padding-bottom: .25rem; transition: color .2s, border-color .2s; }
+    .collection-card:hover .cc-cta { color: var(--white); border-color: rgba(255,255,255,.5); }
+
+    /* ── WHY STRIP (replaces why-grid) ─────── */
+    .why-strip { display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; background: var(--white); }
+    .why-divider { background: var(--border); }
+    .why-item { padding: 5rem 6rem; }
+    .why-num { font-size: .6rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-family: var(--ff-sans); margin-bottom: 1.6rem; display: block; }
+    .why-item h3 { font-family: var(--ff-serif); font-size: 1.25rem; font-weight: 600; color: var(--dark); margin-bottom: .9rem; font-style: italic; line-height: 1.3; }
+    .why-item p { color: var(--muted); font-size: .85rem; line-height: 1.9; }
+
+    /* ── PRODUCT PAGE HEADER ────────────────── */
+    .products-header { background: var(--dark); color: var(--white); padding: 4rem 8rem; text-align: center; }
+    .products-header h2 { font-family: var(--ff-serif); font-size: 2.4rem; font-weight: 600; margin-bottom: .6rem; font-style: italic; }
+    .products-header p  { color: rgba(255,255,255,.45); font-size: .82rem; letter-spacing: 1.5px; text-transform: uppercase; }
+    .filter-bar { background: var(--cream); padding: 1rem 8rem; display: flex; gap: .6rem; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+    .filter-chip { padding: .4rem 1.2rem; border-radius: 0; border: 1px solid var(--border); font-size: .72rem; letter-spacing: 1.2px; text-transform: uppercase; cursor: pointer; background: transparent; font-family: var(--ff-sans); transition: all .2s; }
+    .filter-chip:hover, .filter-chip.active { background: var(--dark); color: var(--white); border-color: var(--dark); }
+
+    /* ── PRODUCT GRID ───────────────────────── */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; padding: 0; background: var(--border); }
+    .product-card { background: var(--white); overflow: hidden; transition: all .3s; }
+    .product-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,.1); z-index: 1; position: relative; }
+    .product-image { height: 300px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; background: var(--sand); }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .product-card:hover .product-image img { transform: scale(1.04); }
+    .product-image .emoji-placeholder { font-size: 4rem; }
+    .badge { position: absolute; top: 1rem; left: 1rem; background: var(--dark); color: var(--white); font-size: .62rem; font-weight: 600; padding: .3rem .7rem; z-index: 1; letter-spacing: 1.2px; text-transform: uppercase; }
+    .product-info { padding: 1.4rem 1.2rem 1.6rem; }
+    .product-name { font-family: var(--ff-serif); font-weight: 600; font-size: 1rem; margin-bottom: .3rem; color: var(--dark); }
+    .product-desc { color: var(--muted); font-size: .78rem; margin-bottom: 1rem; line-height: 1.6; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-size: .9rem; font-weight: 600; color: var(--dark); letter-spacing: .5px; }
+    .add-btn { background: transparent; color: var(--dark); border: 1px solid var(--dark); padding: .45rem 1rem; cursor: pointer; font-size: .68rem; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; font-family: var(--ff-sans); transition: all .2s; }
+    .add-btn:hover { background: var(--dark); color: var(--white); }
+    .add-btn.added { background: var(--green); color: var(--white); border-color: var(--green); }
+
+    /* ── CART SIDEBAR ───────────────────────── */
+    .cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 2000; }
+    .cart-overlay.open { display: block; }
+    .cart-sidebar { position: absolute; right: 0; top: 0; bottom: 0; width: min(400px, 100%); background: var(--cream); display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(0,0,0,.2); }
+    .cart-header { background: var(--dark); color: var(--white); padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; align-items: center; }
+    .cart-header h3 { font-family: var(--ff-serif); font-size: 1rem; font-weight: 600; letter-spacing: 1px; font-style: italic; }
+    .close-btn { background: none; border: none; color: rgba(255,255,255,.6); font-size: 1.2rem; cursor: pointer; line-height: 1; transition: color .2s; }
+    .close-btn:hover { color: var(--white); }
+    .cart-body { flex: 1; overflow-y: auto; padding: .5rem 1.2rem; }
+    .empty-cart { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    .empty-cart .eicon { font-size: 2.5rem; margin-bottom: 1rem; opacity: .4; }
+    .cart-item { display: flex; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--border); align-items: center; }
+    .ci-thumb { width: 60px; height: 60px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; background: var(--sand); }
+    .ci-details { flex: 1; }
+    .ci-name  { font-family: var(--ff-serif); font-weight: 600; font-size: .88rem; margin-bottom: .15rem; }
+    .ci-price { color: var(--muted); font-size: .82rem; }
+    .ci-qty   { display: flex; align-items: center; gap: .5rem; margin-top: .4rem; }
+    .qty-btn  { background: transparent; border: 1px solid var(--border); width: 24px; height: 24px; cursor: pointer; font-weight: 600; font-size: .85rem; transition: all .2s; }
+    .qty-btn:hover { background: var(--dark); color: var(--white); border-color: var(--dark); }
+    .ci-remove { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: .25rem; transition: color .2s; }
+    .ci-remove:hover { color: var(--rose); }
+    .cart-footer { border-top: 1px solid var(--border); padding: 1.4rem 1.6rem; background: var(--white); }
+    .cart-subtotal { display: flex; justify-content: space-between; font-weight: 600; font-size: .95rem; margin-bottom: .6rem; }
+    .delivery-badge { padding: .7rem; font-size: .75rem; text-align: center; margin-bottom: .8rem; font-weight: 500; letter-spacing: .5px; }
+    .cart-note { font-size: .72rem; color: var(--muted); margin-bottom: 1rem; text-align: center; letter-spacing: .5px; }
+    .checkout-btn { width: 100%; background: var(--dark); color: var(--white); border: none; padding: 1rem; font-size: .75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: var(--ff-sans); transition: background .2s; }
+    .checkout-btn:hover { background: var(--rose); }
+
+    /* ── CHECKOUT MODAL ─────────────────────── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 3000; overflow-y: auto; padding: 1.5rem; }
+    .modal-overlay.open { display: flex; justify-content: center; align-items: flex-start; }
+    .modal-box { background: var(--cream); width: 100%; max-width: 580px; overflow: hidden; }
+    .modal-header { background: var(--dark); color: var(--white); padding: 1.3rem 1.6rem; display: flex; justify-content: space-between; align-items: center; }
+    .modal-header h3 { font-family: var(--ff-serif); font-size: 1rem; font-weight: 600; font-style: italic; letter-spacing: .5px; }
+    .modal-body { padding: 2rem; }
+    .form-section { font-family: var(--ff-sans); font-weight: 600; color: var(--dark); font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; margin: 1.4rem 0 1rem; padding-bottom: .5rem; border-bottom: 1px solid var(--border); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .9rem; }
+    .form-group label { font-size: .7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+    .form-group input, .form-group select, .form-group textarea { padding: .8rem; border: 1px solid var(--border); background: var(--white); font-size: .9rem; font-family: var(--ff-sans); transition: border-color .2s; }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--dark); }
+    .order-mini { background: var(--white); border: 1px solid var(--border); padding: 1.2rem 1.4rem; margin-bottom: 1.4rem; }
+    .order-mini h4 { font-family: var(--ff-serif); font-size: .9rem; font-weight: 600; margin-bottom: .9rem; font-style: italic; }
+    .order-row { display: flex; justify-content: space-between; font-size: .83rem; margin-bottom: .4rem; color: var(--muted); }
+    .order-total-row { display: flex; justify-content: space-between; font-weight: 600; font-size: .95rem; margin-top: .9rem; padding-top: .7rem; border-top: 1px solid var(--border); color: var(--dark); }
+    .pay-options { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1.4rem; }
+    .pay-option { border: 1px solid var(--border); padding: .9rem; cursor: pointer; text-align: center; transition: all .2s; background: var(--white); }
+    .pay-option:hover, .pay-option.selected { border-color: var(--dark); background: var(--sand); }
+    .pay-option .picon { font-size: 1.3rem; margin-bottom: .3rem; }
+    .pay-option .plabel { font-size: .7rem; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--text); }
+    .place-btn { width: 100%; background: var(--dark); color: var(--white); border: none; padding: 1.1rem; font-size: .75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: var(--ff-sans); transition: background .2s; }
+    .place-btn:hover { background: var(--rose); }
+
+    /* ── CONFIRMATION ───────────────────────── */
+    .confirm-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.8); z-index: 4000; align-items: center; justify-content: center; padding: 1.5rem; }
+    .confirm-modal.open { display: flex; }
+    .confirm-box { background: var(--cream); border: 1px solid var(--border); padding: 3.5rem 2.5rem; max-width: 440px; width: 100%; text-align: center; }
+    .confirm-icon  { font-size: 3rem; margin-bottom: 1.2rem; }
+    .confirm-title { font-family: var(--ff-serif); font-size: 1.8rem; font-weight: 700; color: var(--dark); margin-bottom: .5rem; font-style: italic; }
+    .confirm-order { color: var(--gold); font-weight: 600; margin-bottom: 1rem; font-size: .9rem; letter-spacing: 1px; }
+    .confirm-msg   { color: var(--muted); line-height: 1.7; margin-bottom: 2rem; font-size: .9rem; }
+
+    /* ── ABOUT ──────────────────────────────── */
+    .page-hero { background: var(--dark); color: var(--white); padding: 6rem 8rem; text-align: center; }
+    .page-hero h1 { font-family: var(--ff-serif); font-size: 2.6rem; font-weight: 700; margin-bottom: 1rem; font-style: italic; }
+    .page-hero p  { color: rgba(255,255,255,.5); max-width: 540px; margin: 0 auto; line-height: 1.8; font-size: .9rem; }
+    .about-section { padding: 5rem 8rem; background: var(--cream); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .about-card { background: var(--cream); padding: 3.5rem; }
+    .about-card h3 { font-family: var(--ff-serif); font-size: 1.2rem; font-weight: 600; color: var(--dark); margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid var(--border); font-style: italic; }
+    .about-card p  { color: var(--muted); line-height: 1.8; font-size: .9rem; }
+    .values-list { list-style: none; margin-top: .75rem; }
+    .values-list li { padding: .7rem 0; display: flex; align-items: center; gap: .75rem; border-bottom: 1px solid var(--border); font-size: .88rem; color: var(--muted); list-style: none; }
+    .values-list li::before { content: '—'; color: var(--gold); font-size: .7rem; flex-shrink: 0; }
+    .values-list li:last-child { border-bottom: none; }
+
+    /* ── TEAM SECTION ───────────────────────── */
+    .team-section { padding: 6rem 8rem; background: var(--sand); }
+    .team-header { text-align: center; margin-bottom: 4rem; }
+    .team-eyebrow { font-size: .62rem; letter-spacing: 5px; text-transform: uppercase; color: var(--rose); font-family: var(--ff-sans); display: block; margin-bottom: 1.2rem; }
+    .team-header h2 { font-family: var(--ff-serif); font-size: 2.5rem; font-weight: 400; color: var(--dark); font-style: italic; margin-bottom: 1rem; }
+    .team-header p { color: var(--muted); font-size: .88rem; line-height: 1.9; max-width: 600px; margin: 0 auto; }
+    .team-divider { display: flex; align-items: center; gap: 2rem; margin: 4rem 0 2.5rem; }
+    .team-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .team-divider-label { font-size: .6rem; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); font-family: var(--ff-sans); white-space: nowrap; }
+    /* Founder horizontal card */
+    .team-founder { display: grid; grid-template-columns: 280px 1fr; background: var(--white); border: 1px solid var(--border); overflow: hidden; margin-bottom: 3rem; }
+    .founder-avatar { overflow: hidden; }
+    .founder-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; min-height: 360px; }
+    .founder-info { padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+    /* Designer + artisan grid cards */
+    .team-designers { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .team-artisans { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+    .team-card { background: var(--white); border: 1px solid var(--border); overflow: hidden; }
+    .team-card-avatar { width: 100%; aspect-ratio: 4/5; overflow: hidden; position: relative; background: var(--dark); }
+    .team-card-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .artisan-badge { position: absolute; bottom: 1rem; left: 1rem; background: var(--gold); color: #080808; font-size: .55rem; letter-spacing: 2px; text-transform: uppercase; font-family: var(--ff-sans); padding: .3rem .85rem; }
+    .team-card-info { padding: 1.8rem 2rem; }
+    .team-name { font-family: var(--ff-serif); font-size: 1.1rem; color: var(--dark); margin-bottom: .35rem; }
+    .team-role { font-size: .58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--rose); font-family: var(--ff-sans); margin-bottom: 1rem; display: block; }
+    .team-bio { color: var(--muted); font-size: .81rem; line-height: 1.88; }
+    .artisan-intro-text { color: var(--muted); font-size: .88rem; line-height: 1.9; padding: 1.6rem 2rem; border-left: 3px solid var(--gold); background: var(--cream); margin-bottom: 2.5rem; font-style: italic; }
+
+    /* ── CONTACT ────────────────────────────── */
+    .contact-body { max-width: 1000px; margin: 0 auto; padding: 6rem 8rem; display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem; }
+    .contact-info h3 { font-family: var(--ff-serif); font-size: 1.2rem; font-weight: 600; color: var(--dark); margin-bottom: 2rem; font-style: italic; }
+    .c-detail { display: flex; gap: .9rem; margin-bottom: 1.4rem; align-items: flex-start; }
+    .c-detail .cicon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; opacity: .5; }
+    .c-detail strong { font-size: .65rem; color: var(--muted); display: block; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: .2rem; }
+    .c-detail p { font-size: .88rem; color: var(--text); line-height: 1.6; }
+    .social-links { display: flex; gap: .6rem; margin-top: 2rem; flex-wrap: wrap; }
+    .social-chip { border: 1px solid var(--border); padding: .4rem 1rem; font-size: .7rem; color: var(--dark); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; transition: all .2s; }
+    .social-chip:hover { background: var(--dark); color: var(--white); border-color: var(--dark); }
+
+    /* ── FOOTER ─────────────────────────────── */
+    footer { background: var(--dark); color: rgba(255,255,255,.3); text-align: center; padding: 3.5rem 2rem; }
+    .footer-logo { font-family: var(--ff-serif); font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: .8rem; letter-spacing: 2px; font-style: italic; }
+    .footer-logo span { color: var(--gold); }
+    footer p { font-size: .72rem; letter-spacing: 1px; margin-top: .5rem; text-transform: uppercase; }
+    .footer-divider { width: 40px; height: 1px; background: rgba(255,255,255,.1); margin: 1.5rem auto; }
+
+    /* ── TOAST ──────────────────────────────── */
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--dark); color: var(--white); padding: .75rem 1.8rem; font-size: .75rem; letter-spacing: 1px; text-transform: uppercase; z-index: 9999; transition: transform .3s ease; border-bottom: 2px solid var(--gold); white-space: nowrap; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── DESIGNER PAGE ──────────────────────── */
+    /* Atelier intro */
+    .atelier-intro {
+      background: #080808; color: var(--white);
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 4rem 2rem; position: relative; overflow: hidden;
+    }
+    .atelier-intro::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(201,168,76,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .atelier-rule { width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, #C9A84C, transparent); margin: 0 auto 2.5rem; }
+    .atelier-eyebrow { font-size: .65rem; letter-spacing: 5px; text-transform: uppercase; color: #C9A84C; font-weight: 400; margin-bottom: 2rem; font-family: var(--ff-sans); }
+    .atelier-intro h1 { font-family: var(--ff-serif); font-size: clamp(3rem, 7vw, 6rem); font-weight: 400; line-height: 1.05; color: var(--white); margin-bottom: 2rem; font-style: italic; }
+    .atelier-intro h1 em { font-style: normal; color: #C9A84C; }
+    .atelier-intro p { color: rgba(255,255,255,.4); font-size: .85rem; letter-spacing: 1.5px; line-height: 2; max-width: 480px; font-family: var(--ff-sans); font-weight: 300; margin-bottom: 3rem; }
+    .atelier-cta { display: inline-block; border: 1px solid rgba(201,168,76,.5); color: #C9A84C; padding: .9rem 2.8rem; font-size: .68rem; letter-spacing: 3px; text-transform: uppercase; font-family: var(--ff-sans); cursor: pointer; background: transparent; transition: all .35s; }
+    .atelier-cta:hover { background: #C9A84C; color: #080808; border-color: #C9A84C; }
+
+
+    /* Text interlude */
+    .d-interlude { background: #080808; padding: 8rem 3rem; text-align: center; position: relative; }
+    .d-interlude::before { content: '✦'; position: absolute; top: 3.5rem; left: 50%; transform: translateX(-50%); color: #C9A84C; font-size: .7rem; letter-spacing: 3px; }
+    .d-interlude blockquote { font-family: var(--ff-serif); font-size: clamp(1.6rem, 3.5vw, 2.8rem); font-weight: 400; font-style: italic; color: var(--white); line-height: 1.4; max-width: 760px; margin: 0 auto 2rem; }
+    .d-interlude cite { color: rgba(255,255,255,.3); font-size: .65rem; letter-spacing: 3px; text-transform: uppercase; font-family: var(--ff-sans); font-style: normal; }
+
+    /* Side-by-side tiles */
+    .d-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; background: #080808; gap: 3px; padding: 3px; }
+    .d-tile { background: #0A0A0A; overflow: hidden; }
+    .d-tile-img { aspect-ratio: 3/5; overflow: hidden; }
+    .d-tile-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 7s ease; }
+    .d-tile:hover .d-tile-img img { transform: scale(1.04); }
+    .d-tile-cap { padding: 1.1rem 1.4rem; }
+    .d-tile-cap span { font-size: .58rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.22); font-family: var(--ff-sans); }
+
+    /* Split: image + text */
+    .d-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; background: #080808; }
+    .d-split-img { overflow: hidden; }
+    .d-split-img img { width: 100%; height: 100%; object-fit: contain; background: #080808; display: block; }
+    .d-split-text { display: flex; flex-direction: column; justify-content: center; padding: 5rem 5rem; background: #0A0A0A; }
+    .d-split-text .d-label { font-size: .62rem; letter-spacing: 4px; text-transform: uppercase; color: #C9A84C; font-family: var(--ff-sans); margin-bottom: 2rem; }
+    .d-split-text h2 { font-family: var(--ff-serif); font-size: 2.6rem; font-weight: 400; color: var(--white); font-style: italic; line-height: 1.2; margin-bottom: 1.8rem; }
+    .d-split-text p { color: rgba(255,255,255,.4); font-size: .85rem; line-height: 2; font-weight: 300; margin-bottom: 2.5rem; }
+    .d-steps { list-style: none; margin-bottom: 3rem; }
+    .d-steps li { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .d-steps li:last-child { border-bottom: none; }
+    .d-step-num { color: #C9A84C; font-size: .65rem; letter-spacing: 2px; font-family: var(--ff-sans); flex-shrink: 0; padding-top: .1rem; }
+    .d-steps li span { color: rgba(255,255,255,.5); font-size: .82rem; line-height: 1.7; }
+
+    /* CTA section */
+    .d-cta { background: #080808; padding: 10rem 3rem; text-align: center; border-top: 1px solid rgba(255,255,255,.05); }
+    .d-cta-rule { width: 60px; height: 1px; background: #C9A84C; margin: 0 auto 3rem; }
+    .d-cta h2 { font-family: var(--ff-serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; font-style: italic; color: var(--white); margin-bottom: 1.5rem; line-height: 1.2; }
+    .d-cta p { color: rgba(255,255,255,.35); font-size: .82rem; letter-spacing: 1px; line-height: 2; max-width: 500px; margin: 0 auto 3.5rem; font-weight: 300; }
+    .d-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .d-btn-gold { border: 1px solid #C9A84C; color: #C9A84C; padding: 1rem 3rem; font-size: .68rem; letter-spacing: 3px; text-transform: uppercase; font-family: var(--ff-sans); cursor: pointer; background: transparent; transition: all .3s; }
+    .d-btn-gold:hover { background: #C9A84C; color: #080808; }
+    .d-btn-ghost { border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.4); padding: 1rem 3rem; font-size: .68rem; letter-spacing: 3px; text-transform: uppercase; font-family: var(--ff-sans); cursor: pointer; background: transparent; transition: all .3s; }
+    .d-btn-ghost:hover { border-color: rgba(255,255,255,.4); color: var(--white); }
+    /* Enquiry modal */
+    .enq-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 3500; overflow-y: auto; padding: 1.5rem; }
+    .enq-overlay.open { display: flex; justify-content: center; align-items: flex-start; }
+    .enq-box { background: #12121E; border-radius: 14px; width: 100%; max-width: 580px; overflow: hidden; border: 1px solid #2D2B40; }
+    .enq-header { background: linear-gradient(90deg,#1A1A2E,#2B1A0F); padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #C9A84C; }
+    .enq-header h3 { color: #F0D080; font-size: 1rem; font-weight: 800; letter-spacing: .5px; }
+    .enq-body { padding: 1.8rem; }
+    .enq-body .form-group label { color: #C4B5A0; }
+    .enq-body .form-group input, .enq-body .form-group select, .enq-body .form-group textarea { background: #1E1E30; border-color: #3D3B55; color: var(--white); }
+    .enq-body .form-group input:focus, .enq-body .form-group select:focus, .enq-body .form-group textarea:focus { border-color: #C9A84C; outline: none; }
+    .enq-body .form-section { color: #C9A84C; border-bottom-color: #C9A84C; }
+    .enq-body select option { background: #1E1E30; }
+    .submit-enq-btn { width: 100%; background: linear-gradient(90deg,#C9A84C,#F0D080); color: #1A1A2E; border: none; padding: 1.1rem; border-radius: 8px; font-size: 1rem; font-weight: 900; cursor: pointer; letter-spacing: .5px; }
+    .submit-enq-btn:hover { opacity: .88; }
+    .design-selected-banner { background: #1E1E30; border: 1px solid #C9A84C; border-radius: 10px; padding: .9rem 1.2rem; margin-bottom: 1.4rem; color: #F0D080; font-size: .88rem; font-weight: 700; }
+    /* Confirm */
+    .enq-confirm { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 4500; align-items: center; justify-content: center; padding: 1.5rem; }
+    .enq-confirm.open { display: flex; }
+    .enq-confirm-box { background: #12121E; border-radius: 16px; padding: 3rem 2rem; max-width: 440px; width: 100%; text-align: center; border: 1px solid #C9A84C; }
+    .enq-confirm-box .confirm-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .enq-confirm-box h2 { color: #F0D080; font-size: 1.7rem; font-weight: 900; margin-bottom: .5rem; }
+    .enq-confirm-box p { color: #8B7355; line-height: 1.7; margin-bottom: 2rem; }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero-content { padding: 3rem 2.5rem 4rem; }
+      .section { padding: 4rem 2.5rem; }
+      .trust-bar, .filter-bar, .products-header, .page-hero { padding-left: 2.5rem; padding-right: 2.5rem; }
+      nav { padding: 0 2rem; }
+      .collections-grid, .why-strip { grid-template-columns: 1fr; }
+      .why-divider { display: none; }
+      .why-item { padding: 3rem 2.5rem; border-bottom: 1px solid var(--border); }
+      .about-section, .team-section { padding: 4rem 2.5rem; }
+      .about-grid, .contact-body, .form-row, .d-tiles, .d-split { grid-template-columns: 1fr; }
+      .team-founder { grid-template-columns: 1fr; }
+      .founder-avatar img { min-height: 280px; }
+      .team-designers, .team-artisans { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .d-split-text { padding: 3rem 2.5rem; }
+      .contact-body { padding: 3rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ══════════════════════════════════════════ -->
+<nav>
+  <div class="logo" onclick="showPage('home')"><em>Dress</em><span>Well</span>.lk</div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')">Home</a></li>
+    <li><a onclick="showPage('womens')">Women's</a></li>
+    <li><a onclick="showPage('mens')">Men's</a></li>
+    <li><a onclick="showPage('kids')">Kids</a></li>
+    <li><a onclick="showPage('designer')" style="color:#F59E0B;">✦ Designer</a></li>
+    <li><a onclick="showPage('about')">About</a></li>
+    <li><a onclick="showPage('contact')">Contact</a></li>
+  </ul>
+  <button class="cart-btn" onclick="openCart()">
+    Cart <span class="cart-count" id="cart-count">0</span>
+  </button>
+</nav>
+
+<!-- ═══ PAGE: HOME ══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">New Collection — 2026</div>
+      <h1>Dress to<br><em>Impress.</em></h1>
+      <p>Curated fashion for women, men &amp; kids — delivered island-wide. From everyday essentials to bespoke couture.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="showPage('womens')">Shop Women's</button>
+        <button class="btn btn-outline" onclick="showPage('designer')">Designer Collection</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust bar -->
+  <div class="trust-bar">
+    <span class="trust-item">Free Delivery Over LKR 3,000</span>
+    <span class="trust-sep">·</span>
+    <span class="trust-item">Easy 7-Day Returns</span>
+    <span class="trust-sep">·</span>
+    <span class="trust-item">New Arrivals Every Friday</span>
+    <span class="trust-sep">·</span>
+    <span class="trust-item">Bespoke Designer Wear</span>
+  </div>
+
+  <!-- Collections -->
+  <div class="section" style="background:var(--cream);padding-bottom:0;padding-left:0;padding-right:0;">
+    <p class="section-subtitle">Explore</p>
+    <h2 class="section-title">Shop by <span>Collection</span></h2>
+    <div class="collections-grid">
+      <div class="collection-card" onclick="showPage('womens')" style="background:#1A0A0F;">
+        <div class="cc-label">Women</div>
+        <h3>Women's Fashion</h3>
+        <p>Dresses, tops, co-ords &amp; more<br>From LKR 1,500</p>
+        <span class="cc-cta">Shop the Collection</span>
+      </div>
+      <div class="collection-card" onclick="showPage('mens')" style="background:#0A0F1C;">
+        <div class="cc-label">Men</div>
+        <h3>Men's Fashion</h3>
+        <p>Shirts, trousers, casual &amp; formal<br>From LKR 1,800</p>
+        <span class="cc-cta">Shop the Collection</span>
+      </div>
+      <div class="collection-card" onclick="showPage('kids')" style="background:#0C1A0A;">
+        <div class="cc-label">Kids</div>
+        <h3>Kids' Fashion</h3>
+        <p>Girls &amp; boys — playful everyday styles<br>From LKR 1,200</p>
+        <span class="cc-cta">Shop the Collection</span>
+      </div>
+      <div class="collection-card" onclick="showPage('designer')" style="background:#080808;grid-column:1/-1;border-top:1px solid rgba(201,168,76,.15);min-height:220px;">
+        <div class="cc-label" style="color:#C9A84C;">Atelier &nbsp;·&nbsp; By Appointment &nbsp;·&nbsp; Made to Order</div>
+        <h3 style="font-size:2rem;color:var(--white);">The Designer &amp; Bridal Collection</h3>
+        <p style="max-width:520px;">Bespoke bridal gowns, couture and one-of-a-kind creations — handcrafted exclusively for you.</p>
+        <span class="cc-cta" style="color:#C9A84C;border-color:rgba(201,168,76,.3);">Enter the Atelier</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why DressWell -->
+  <div style="background:var(--white);">
+    <div class="why-strip">
+      <div class="why-item">
+        <span class="why-num">01 &nbsp;&mdash;&nbsp; Style</span>
+        <h3>Curated, Not Compromised</h3>
+        <p>Every piece in our collection is hand-selected for quality, fit and style — so you never have to choose between looking good and spending smart.</p>
+      </div>
+      <div class="why-divider"></div>
+      <div class="why-item">
+        <span class="why-num">02 &nbsp;&mdash;&nbsp; Delivery</span>
+        <h3>Free Island-Wide, In Days</h3>
+        <p>Orders over LKR 3,000 ship free to any district in Sri Lanka. Delivered in 2–4 business days, tracked from our door to yours.</p>
+      </div>
+      <div class="why-divider"></div>
+      <div class="why-item">
+        <span class="why-num">03 &nbsp;&mdash;&nbsp; Freshness</span>
+        <h3>New Arrivals, Every Friday</h3>
+        <p>Fashion moves fast and so do we. New styles land every week alongside an easy 7-day return policy — so you can shop with complete confidence.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Picks -->
+  <div class="section" style="background:var(--dark);padding-left:0;padding-right:0;">
+    <p class="section-subtitle" style="color:rgba(255,255,255,.35);">Handpicked</p>
+    <h2 class="section-title" style="color:var(--white)">Featured <span>Picks</span></h2>
+    <div class="products-grid" id="featured-grid" style="background:rgba(255,255,255,.06);"></div>
+  </div>
+</div>
+
+<!-- ═══ PAGE: WOMEN'S ═══════════════════════════════════════ -->
+<div class="page" id="page-womens">
+  <div class="products-header">
+    <h2>Women's Fashion</h2>
+    <p>From work looks to weekend outfits — find your style at DressWell.lk</p>
+  </div>
+  <div class="filter-bar" id="womens-filters"></div>
+  <div class="products-grid" id="womens-grid"></div>
+</div>
+
+<!-- ═══ PAGE: MEN'S ══════════════════════════════════════════ -->
+<div class="page" id="page-mens">
+  <div class="products-header">
+    <h2>Men's Fashion</h2>
+    <p>Upgrade your wardrobe without breaking the bank</p>
+  </div>
+  <div class="filter-bar" id="mens-filters"></div>
+  <div class="products-grid" id="mens-grid"></div>
+</div>
+
+<!-- ═══ PAGE: DESIGNER ═══════════════════════════════════════ -->
+<div class="page" id="page-designer">
+
+  <!-- ① Atelier intro -->
+  <div class="atelier-intro">
+    <div class="atelier-rule"></div>
+    <div class="atelier-eyebrow">DressWell Atelier &nbsp;·&nbsp; By Appointment</div>
+    <h1>Where Every<br>Stitch Tells a<br><em>Story.</em></h1>
+    <p>Bespoke bridal and designer wear, crafted exclusively for you. Each piece is conceived from a conversation and brought to life by hand — for the moments that last forever.</p>
+    <button class="atelier-cta" onclick="openEnquiry('General Atelier Enquiry')">Begin Your Journey</button>
+  </div>
+
+
+  <!-- ③ Editorial quote interlude -->
+  <div class="d-interlude">
+    <blockquote>"Fashion fades. Style is eternal — and the most enduring style is the one made just for you."</blockquote>
+    <cite>DressWell Atelier</cite>
+  </div>
+
+  <!-- ④ Side-by-side tiles -->
+  <div class="d-tiles">
+    <div class="d-tile">
+      <div class="d-tile-img">
+        <img src="images/Party Maxi Dress.png" alt="Party Maxi Dress">
+      </div>
+      <div class="d-tile-cap"><span>Party Maxi Dress</span></div>
+    </div>
+    <div class="d-tile">
+      <div class="d-tile-img">
+        <img src="images/midnight navy tuxedo.png" alt="Midnight Navy Tuxedo">
+      </div>
+      <div class="d-tile-cap"><span>Midnight Navy Tuxedo</span></div>
+    </div>
+    <div class="d-tile">
+      <div class="d-tile-img">
+        <img src="images/ChatGPT Image Jul 17, 2026, 11_08_02 AM.png" alt="Atelier Collection">
+      </div>
+      <div class="d-tile-cap"><span>Atelier Collection</span></div>
+    </div>
+  </div>
+
+  <!-- ⑤ Split: how it works + image -->
+  <div class="d-split">
+    <div class="d-split-img">
+      <img src="images/Bridal Gown.png" alt="Designer Process">
+    </div>
+    <div class="d-split-text">
+      <div class="d-label">The Atelier Process</div>
+      <h2>Crafted for<br>Your Moment.</h2>
+      <p>Every DressWell Atelier piece begins with you — your vision, your body, your occasion. We take the time to understand what matters most before a single stitch is made.</p>
+      <ul class="d-steps">
+        <li><span class="d-step-num">01 &nbsp;—</span><span>Share your vision, occasion &amp; measurements. We respond within 24 hours.</span></li>
+        <li><span class="d-step-num">02 &nbsp;—</span><span>Consultation &amp; mood board. Fabrics, silhouette and details are agreed together.</span></li>
+        <li><span class="d-step-num">03 &nbsp;—</span><span>Handcrafted to your exact measurements and delivered island-wide.</span></li>
+      </ul>
+      <button class="atelier-cta" onclick="openEnquiry('Atelier Process Enquiry')">Start Your Enquiry</button>
+    </div>
+  </div>
+
+  <!-- ⑦ Final CTA -->
+  <div class="d-cta">
+    <div class="d-cta-rule"></div>
+    <h2>Your Vision.<br>Our Craft.</h2>
+    <p>Wedding gowns, bridal party, engagement looks, prom gowns and fully bespoke creations — all made to order, exclusively for you.</p>
+    <div class="d-cta-btns">
+      <button class="d-btn-gold" onclick="openEnquiry('Atelier Bespoke Enquiry')">Book a Consultation</button>
+      <button class="d-btn-ghost" onclick="showPage('contact')">Get in Touch</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ PAGE: KIDS ═══════════════════════════════════════════ -->
+<div class="page" id="page-kids">
+  <div class="products-header" style="background:linear-gradient(135deg,#F59E0B,#D97706);">
+    <h2>Kids' Fashion</h2>
+    <p>Stylish, comfortable clothing for girls &amp; boys — built to last and loved to wear</p>
+  </div>
+  <div class="filter-bar" id="kids-filters"></div>
+  <div class="products-grid" id="kids-grid"></div>
+</div>
+
+<!-- ═══ PAGE: ABOUT ══════════════════════════════════════════ -->
+<div class="page" id="page-about">
+
+  <div class="page-hero">
+    <h1>Fashion That Creates Opportunity</h1>
+    <p>DressWell.lk is Sri Lanka's women-driven online fashion destination — built on the belief that great style and meaningful livelihoods go hand in hand.</p>
+  </div>
+
+  <div class="about-section">
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Our Story</h3>
+        <p>DressWell.lk was born from two convictions that most businesses keep separate: fashion should be accessible to everyone who wants to wear it, and opportunity should be available to every woman who has the talent to create it. In Sri Lanka, we saw skilled women — living at the poverty line, in villages and small towns far from economic centres — who had the hands, the patience, and the craft, but no platform to turn it into a livelihood.</p>
+        <br>
+        <p>So we built DressWell differently. Every garment sold on this platform is produced through our Artisan Collective — a program that recruits women from underprivileged communities, provides professional skills training in cutting, stitching, and finishing, and pays them fairly for work they can be proud of. For many of our artisans, DressWell is the first formal income they have ever earned. It is the first time their skill has been recognised and rewarded. And for some, it is the first step toward genuine independence — for themselves and for their families.</p>
+      </div>
+      <div class="about-card">
+        <h3>Our Values</h3>
+        <p>At DressWell.lk, we believe a business has a responsibility that goes beyond its balance sheet. We are women-led from the very first stitch, built on the principle that style and social purpose are not opposites — they amplify each other. We offer fashion for everyone, across all genders and all ages, at honest LKR pricing that reflects real Sri Lankan lives rather than imported aspirations.</p>
+        <br>
+        <p>We commit to fast, island-wide delivery, hassle-free returns, and new arrivals every Friday — because our customers deserve reliability and excitement in equal measure. And behind every piece we deliver, we commit equally to the women who made it: fair wages, continuous skills development, and a working environment where they are respected, supported, and given room to grow. When a woman at DressWell grows, her family grows with her. That ripple effect is the business we are most proud of building.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Meet the Team ───────────────────── -->
+  <div class="team-section">
+
+    <div class="team-header">
+      <span class="team-eyebrow">The People Behind the Brand</span>
+      <h2>Meet Our Team</h2>
+      <p>Every DressWell piece begins with a person. Our team of six extraordinary women — from boardroom to workshop — is proof that when you invest in women, the results are beautiful.</p>
+    </div>
+
+    <!-- ① Founder -->
+    <div class="team-divider">
+      <div class="team-divider-line"></div>
+      <span class="team-divider-label">Founder &amp; Leadership</span>
+      <div class="team-divider-line"></div>
+    </div>
+
+    <div class="team-founder">
+      <div class="founder-avatar">
+        <img src="images/Milani Wickramaratne - Founder.png" alt="Milani Wickramaratne">
+      </div>
+      <div class="founder-info">
+        <span class="team-role">Founder &amp; Chief Executive</span>
+        <div class="team-name" style="font-family:var(--ff-serif);font-size:1.6rem;color:var(--dark);margin-bottom:1rem;">Milani Wickramaratne</div>
+        <p class="team-bio">Milani launched DressWell.lk with a singular vision — to build Sri Lanka's first truly inclusive online fashion destination, and to prove that a business can be both profitable and purposeful. A driven entrepreneur with a background in business and marketing, she oversees the brand's strategy, growth, and community initiatives. The Artisan Collective — a skills development program that creates life-changing opportunities for talented women from underserved communities — is her most personal achievement. Milani leads DressWell not just as a business, but as a platform for women to break through the glass ceilings that have held them back for too long.</p>
+      </div>
+    </div>
+
+    <!-- ② Design Team -->
+    <div class="team-divider">
+      <div class="team-divider-line"></div>
+      <span class="team-divider-label">Design Team</span>
+      <div class="team-divider-line"></div>
+    </div>
+
+    <div class="team-designers">
+      <div class="team-card">
+        <div class="team-card-avatar">
+          <img src="images/Ms. Kumari Perera - Designer.png" alt="Ms. Kumari Perera">
+        </div>
+        <div class="team-card-info">
+          <span class="team-role">Creative Director &amp; Lead Designer</span>
+          <div class="team-name">Ms. Kumari Perera</div>
+          <p class="team-bio">Kumari brings over a decade of fashion expertise to every DressWell collection. With a keen eye for global trends and a deep understanding of Sri Lankan aesthetics, she curates pieces that feel contemporary yet grounded in local identity. From silhouette selection to fabric sourcing, Kumari ensures every garment meets an exacting standard of style and wearability. Under her direction, DressWell's collections have found a voice that is uniquely Sri Lankan and undeniably modern.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-avatar">
+          <img src="images/Ms. Narmada Wickramasinghe - Designer.png" alt="Ms. Narmada Wickramasinghe">
+        </div>
+        <div class="team-card-info">
+          <span class="team-role">Head of Atelier &amp; Bespoke Design</span>
+          <div class="team-name">Ms. Narmada Wickramasinghe</div>
+          <p class="team-bio">Narmada is the creative force behind DressWell's bespoke atelier. With formal training in couture construction and years of experience in made-to-order fashion, she leads every atelier piece from concept sketch to final fitting. Her signature blend of structured tailoring and graceful detailing has established DressWell Atelier as the destination of choice for bridal and special occasion wear in Sri Lanka. Narmada transforms each client's vision into a wearable piece of art.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ Artisan Collective -->
+    <div class="team-divider">
+      <div class="team-divider-line"></div>
+      <span class="team-divider-label">The Artisan Collective</span>
+      <div class="team-divider-line"></div>
+    </div>
+
+    <p class="artisan-intro-text">Our Artisan Collective is central to who we are. Three extraordinary women — from communities where skilled trades offered little to no opportunities for women — whose talent, resilience, and dedication bring every DressWell piece to life. Through our program, we provide professional training, fair wages, and a stage that celebrates their craft on a national level.</p>
+
+    <div class="team-artisans">
+      <div class="team-card">
+        <div class="team-card-avatar">
+          <img src="images/Hirushi Perera - Cutting.png" alt="Hirushi Perera">
+          <span class="artisan-badge">Artisan Collective</span>
+        </div>
+        <div class="team-card-info">
+          <span class="team-role">Pattern Cutting Specialist</span>
+          <div class="team-name">Hirushi Perera</div>
+          <p class="team-bio">Hirushi's precision with pattern cutting is the silent foundation of every DressWell garment. Joining the Artisan Collective with limited formal training and a determination to build something for herself, she has since mastered garment construction with remarkable speed and accuracy. Her spatial intuition and relentless attention to detail make her an irreplaceable part of the DressWell team — and a role model for younger women in her community.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-avatar">
+          <img src="images/Ms. Dinuka Gamage - Stitching.png" alt="Ms. Dinuka Gamage" style="object-position: center 20%;">
+          <span class="artisan-badge">Artisan Collective</span>
+        </div>
+        <div class="team-card-info">
+          <span class="team-role">Master Seamstress</span>
+          <div class="team-name">Ms. Dinuka Gamage</div>
+          <p class="team-bio">Dinuka's hands have stitched hundreds of DressWell pieces to perfection. A mother of two who came to the Artisan Collective seeking financial independence, she discovered not just a livelihood — but a calling. Her stitch work is meticulous, her consistency unmatched, and her quiet pride in every finished garment is a testament to what opportunity, combined with raw talent, can unlock in a person.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-avatar">
+          <img src="images/Mekala Gunawardena - Stitching.png" alt="Mekala Gunawardena">
+          <span class="artisan-badge">Artisan Collective</span>
+        </div>
+        <div class="team-card-info">
+          <span class="team-role">Senior Seamstress &amp; Mentor</span>
+          <div class="team-name">Mekala Gunawardena</div>
+          <p class="team-bio">Mekala represents everything DressWell's Artisan Collective stands for. Coming from a background with few prospects for women in skilled trades, she joined the program with basic sewing knowledge and an unshakeable drive to grow. Today, she handles complex assembly for the atelier collection and actively mentors newer team members. A natural leader who found her platform — and is using it to lift others.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /team-section -->
+
+</div>
+
+<!-- ═══ PAGE: CONTACT ════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <h1>Get in Touch</h1>
+    <p>Sizing help, order query, or just want to say hello — we'd love to hear from you.</p>
+  </div>
+  <div class="contact-body">
+    <div class="contact-info">
+      <h3>Contact Details</h3>
+      <div class="c-detail"><div><strong>Email</strong><p>hello@dresswell.lk</p></div></div>
+      <div class="c-detail"><div><strong>WhatsApp</strong><p>+94 77 000 0000</p></div></div>
+      <div class="c-detail"><div><strong>Location</strong><p>Colombo, Sri Lanka<br>Delivering island-wide</p></div></div>
+      <div class="c-detail"><div><strong>Hours</strong><p>Mon–Sat: 9 AM – 6 PM<br>Sun: 10 AM – 4 PM</p></div></div>
+      <div class="social-links">
+        <a class="social-chip" href="#">Instagram</a>
+        <a class="social-chip" href="#">Facebook</a>
+        <a class="social-chip" href="#">TikTok</a>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-weight:700;color:var(--dark);margin-bottom:1.4rem;">Send a Message</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Ayesha Perera"></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="ayesha@email.com"></div>
+      <div class="form-group"><label>Message</label><textarea rows="4" style="padding:.7rem;border:1.5px solid #D1D5DB;border-radius:7px;font-family:inherit;width:100%;resize:vertical;" placeholder="How can we help?"></textarea></div>
+      <button class="btn btn-primary btn-full" onclick="showToast('Message sent! We\'ll reply within 24 hours. 💌')">Send Message</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo"><em>Dress</em><span>Well</span>.lk</div>
+  <div class="footer-divider"></div>
+  <p>© 2026 DressWell.lk &nbsp;·&nbsp; Fashion for Every Sri Lankan</p>
+  <p>Free Delivery Over LKR 3,000 &nbsp;·&nbsp; Easy Returns &nbsp;·&nbsp; New Arrivals Every Friday</p>
+</footer>
+
+<!-- ═══ DESIGNER ENQUIRY MODAL ════════════════════════════ -->
+<div class="enq-overlay" id="enq-overlay">
+  <div class="enq-box">
+    <div class="enq-header">
+      <h3>✦ Designer Enquiry — DressWell.lk</h3>
+      <button class="close-btn" style="color:#F0D080;" onclick="closeEnquiry()">✕</button>
+    </div>
+    <div class="enq-body">
+      <div class="design-selected-banner" id="enq-design-name">✦ General Designer Enquiry</div>
+
+      <p class="form-section">Your Details</p>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name *</label><input id="enq-fn" placeholder="Ayesha Perera"></div>
+        <div class="form-group"><label>WhatsApp / Phone *</label><input id="enq-ph" placeholder="+94 77 000 0000"></div>
+      </div>
+      <div class="form-group"><label>Email *</label><input type="email" id="enq-em" placeholder="ayesha@email.com"></div>
+
+      <p class="form-section">Your Occasion</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Occasion Type *</label>
+          <select id="enq-occ">
+            <option value="">Select…</option>
+            <option>Wedding — Bride</option>
+            <option>Wedding — Bridesmaid</option>
+            <option>Engagement Ceremony</option>
+            <option>Homecoming / Poruwa</option>
+            <option>Prom / School Formal</option>
+            <option>Corporate Event</option>
+            <option>Birthday / Party Gown</option>
+            <option>Other Formal Occasion</option>
+            <option>Fully Bespoke / Custom</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Occasion Date</label><input type="date" id="enq-date"></div>
+      </div>
+      <div class="form-group">
+        <label>Approximate Budget (LKR)</label>
+        <select id="enq-budget">
+          <option value="">Select range…</option>
+          <option>Under LKR 25,000</option>
+          <option>LKR 25,000 – 50,000</option>
+          <option>LKR 50,000 – 100,000</option>
+          <option>LKR 100,000 – 200,000</option>
+          <option>Over LKR 200,000</option>
+        </select>
+      </div>
+
+      <p class="form-section">Your Measurements (optional)</p>
+      <div class="form-row">
+        <div class="form-group"><label>Bust (inches)</label><input id="enq-bust" placeholder="e.g. 34"></div>
+        <div class="form-group"><label>Waist (inches)</label><input id="enq-waist" placeholder="e.g. 28"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Hips (inches)</label><input id="enq-hips" placeholder="e.g. 36"></div>
+        <div class="form-group"><label>Height (cm)</label><input id="enq-height" placeholder="e.g. 162"></div>
+      </div>
+
+      <p class="form-section">Your Vision</p>
+      <div class="form-group">
+        <label>Colour Preferences</label>
+        <input id="enq-colour" placeholder="e.g. Ivory, Blush Pink, Deep Red…">
+      </div>
+      <div class="form-group">
+        <label>Style &amp; Special Requirements</label>
+        <textarea id="enq-notes" rows="4" style="padding:.7rem;border:1.5px solid #3D3B55;border-radius:7px;font-family:inherit;width:100%;resize:vertical;background:#1E1E30;color:var(--white);" placeholder="Tell us your vision — silhouette, fabric preferences, embellishments, inspiration images, anything that matters to you…"></textarea>
+      </div>
+
+      <button class="submit-enq-btn" onclick="submitEnquiry()">✦ Submit Enquiry</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ENQUIRY CONFIRMATION ══════════════════════════════ -->
+<div class="enq-confirm" id="enq-confirm">
+  <div class="enq-confirm-box">
+    <div style="font-family:var(--ff-serif);font-size:2rem;font-style:italic;color:#C9A84C;margin-bottom:1.2rem;">Enquiry Received.</div>
+    <h2>Enquiry Received!</h2>
+    <p>Thank you for your enquiry. Our designer team will review your requirements and reach out within 24 hours via WhatsApp or email to discuss your vision.</p>
+    <button class="gold-btn" style="width:100%;" onclick="afterEnqConfirm()">Back to Designer Collection</button>
+  </div>
+</div>
+
+<!-- ═══ CART SIDEBAR ══════════════════════════════════════ -->
+<div class="cart-overlay" id="cart-overlay" onclick="overlayClose(event)">
+  <div class="cart-sidebar">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <div class="empty-cart"><p style="font-family:var(--ff-serif);font-style:italic;font-size:1rem;margin-bottom:.5rem;">Your cart is empty.</p><p style="font-size:.75rem;letter-spacing:1px;">Start exploring our collections.</p></div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal-val">LKR 0</span></div>
+      <div class="delivery-badge" id="delivery-badge">Add LKR <span id="del-remaining">3,000</span> more for FREE delivery!</div>
+      <p class="cart-note">Delivery: LKR 300 · Free on orders over LKR 3,000</p>
+      <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHECKOUT MODAL ════════════════════════════════════ -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🔒 Secure Checkout — DressWell.lk</h3>
+      <button class="close-btn" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Order summary -->
+      <div class="order-mini">
+        <h4>Order Summary</h4>
+        <div id="checkout-items"></div>
+        <div class="order-row"><span>Delivery</span><span id="co-delivery">LKR 300</span></div>
+        <div class="order-total-row"><span>Total</span><span id="co-total">LKR 0</span></div>
+      </div>
+
+      <p class="form-section">Contact Information</p>
+      <div class="form-row">
+        <div class="form-group"><label>First Name *</label><input id="fn" placeholder="Ayesha"></div>
+        <div class="form-group"><label>Last Name *</label><input id="ln" placeholder="Perera"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Email *</label><input type="email" id="em" placeholder="ayesha@email.com"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="ph" placeholder="+94 77 000 0000"></div>
+      </div>
+
+      <p class="form-section">Delivery Address</p>
+      <div class="form-group"><label>Address Line 1 *</label><input id="a1" placeholder="No. 25, Flower Road"></div>
+      <div class="form-group"><label>Address Line 2</label><input id="a2" placeholder="Apartment / Building (optional)"></div>
+      <div class="form-row">
+        <div class="form-group"><label>City *</label><input id="ct" placeholder="Colombo"></div>
+        <div class="form-group">
+          <label>District *</label>
+          <select id="ds">
+            <option value="">Select district…</option>
+            <option>Colombo</option><option>Gampaha</option><option>Kalutara</option>
+            <option>Kandy</option><option>Galle</option><option>Matara</option>
+            <option>Negombo</option><option>Jaffna</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="form-section">Payment Method</p>
+      <div class="pay-options">
+        <div class="pay-option selected" onclick="selPay(this,'cod')">
+          <div class="picon">💵</div><div class="plabel">Cash on Delivery</div>
+        </div>
+        <div class="pay-option" onclick="selPay(this,'card')">
+          <div class="picon">💳</div><div class="plabel">Credit / Debit Card</div>
+        </div>
+        <div class="pay-option" onclick="selPay(this,'bank')">
+          <div class="picon">🏦</div><div class="plabel">Bank Transfer</div>
+        </div>
+        <div class="pay-option" onclick="selPay(this,'genie')">
+          <div class="picon">📲</div><div class="plabel">Genie / FriMi</div>
+        </div>
+      </div>
+
+      <button class="place-btn" onclick="placeOrder()">✅ Place Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ORDER CONFIRMATION ════════════════════════════════ -->
+<div class="confirm-modal" id="confirm-modal">
+  <div class="confirm-box">
+    <div class="confirm-icon" style="font-family:var(--ff-serif);font-size:2rem;font-style:italic;color:var(--gold);">Order Placed.</div>
+    <div class="confirm-title">Order Confirmed!</div>
+    <div class="confirm-order" id="order-num">Order #DW-2026-0001</div>
+    <div class="confirm-msg">
+      Thank you for shopping at DressWell.lk! 🎉<br>
+      Your order will be delivered in 2–4 business days.<br>
+      We'll send tracking details to your WhatsApp shortly.
+    </div>
+    <button class="btn btn-primary btn-full" onclick="afterConfirm()">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═════════════════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════
+   PRODUCT DATA
+══════════════════════════════════════════ */
+const WOMENS = [
+  { id:'w1',  name:'Floral Midi Dress',           desc:'Lightweight & breathable. 5 colours. Sizes S–XL.',         price:3500,  img:'images/Floral Midi Dress.png',           bg:'#FECDD3', badge:'New' },
+  { id:'w2',  name:'Linen Co-ord Set',             desc:'Top + wide-leg trousers. Premium linen blend.',             price:4200,  img:'images/Linen Co-ord Set.png',             bg:'#FDE68A', badge:'Popular' },
+  { id:'w3',  name:'Classic White Shirt',          desc:'Wardrobe essential. Office-to-brunch versatility.',        price:2200,  img:'images/Classic White Shirt.png',          bg:'#DBEAFE' },
+  { id:'w4',  name:'Wide-Leg Pants',               desc:'Comfortable & on-trend. Pair with any fitted top.',        price:3800,  img:'images/Wide-Leg Pants.png',               bg:'#D1FAE5' },
+  { id:'w5',  name:'Ruched Mini Skirt',            desc:'Go-out ready. Stretchy fabric. 3 colours.',                price:2800,  img:'images/Ruched Mini Skirt.png',            bg:'#EDE9FE', badge:'New' },
+  { id:'w6',  name:'Knit Crop Top',                desc:'Trendy ribbed knit. Perfect solo or layered.',             price:1800,  img:'images/Knit Crop Top.png',                bg:'#FCE7F3' },
+  { id:'w7',  name:'Maxi Wrap Dress',              desc:'Effortless elegance. Adjustable tie. Midi-to-maxi.',       price:4500,  img:'images/Maxi Wrap Dress.png',              bg:'#FEF3C7', badge:'Popular' },
+  { id:'w8',  name:'Denim Jacket',                 desc:'Classic staple. Relaxed fit, raw hem detail.',             price:5200,  img:'images/Denim Jacket.png',                 bg:'#BFDBFE' },
+  { id:'w9',  name:'Boss Lady White Jacket',       desc:'Sharp & polished. Power dressing redefined.',              price:5500,  img:'images/Boss Lady White Jacket.png',       bg:'#F3F4F6', badge:'New' },
+  { id:'w10', name:'Boss Lady Linen Top',          desc:'Lightweight linen in classic white. Chic everyday wear.',  price:2500,  img:'images/Boss Lady white linen top.png',    bg:'#F0FDF4' },
+  { id:'w11', name:'Boss Lady Short Skirt',        desc:'Mini cut with a confident edge. Work or play.',            price:2600,  img:'images/Boss lady Short Skirt.png',        bg:'#FEE2E2' },
+  { id:'w12', name:'Burnt Denim',                  desc:'Unique washed finish. Statement street-style look.',       price:4000,  img:'images/Burnt Denim.png',                  bg:'#DBEAFE', badge:'New' },
+  { id:'w13', name:'Checked Shirt',                desc:'Classic plaid. Tie it or tuck it — always a look.',        price:2300,  img:'images/Checked Shirt.png',                bg:'#FEF3C7' },
+  { id:'w14', name:'Cowgirl Pants',                desc:'Western-inspired wide-leg style. Bold & comfortable.',     price:3200,  img:'images/Cowgirl Pants.png',                bg:'#D1FAE5' },
+  { id:'w15', name:'Lady Coverall',                desc:'All-in-one style. Effortless & practical.',                price:4800,  img:'images/Lady Coverall.png',                bg:'#EDE9FE', badge:'Popular' },
+  { id:'w16', name:'Linen Dress',                  desc:'Breathable linen. Relaxed silhouette for any occasion.',   price:3600,  img:'images/Linen Dress.png',                  bg:'#FEF9C3' },
+  { id:'w17', name:'Pink Sweater with Hoodie',     desc:'Cosy and cute. Pastel pink hooded sweater.',               price:3900,  img:'images/Pink Sweater with Hoodie.png',     bg:'#FCE7F3' },
+  { id:'w18', name:'Pleated Maxi Skirt',           desc:'Flowy & elegant. Pairs with anything from tees to blouses.', price:3100, img:'images/Pleated maxi skirt.png',         bg:'#FEE2E2' },
+  { id:'w19', name:'Ribbed Camisole Bodysuit',     desc:'Sleek ribbed fit. Layer it or wear it solo.',              price:1900,  img:'images/Ribbed camisole bodysuit.png',     bg:'#DBEAFE' },
+  { id:'w20', name:'Silk Maxi Dress',              desc:'Luxurious drape. Perfect for events or evenings out.',     price:5800,  img:'images/Silk Maxi Dress.png',              bg:'#FEF3C7', badge:'Popular' },
+];
+
+const MENS = [
+  { id:'m1',  name:'Pale Blue Slim-Fit Oxford Shirt',     desc:'Professional & versatile. A wardrobe staple for any occasion.', price:2800, img:'images/Pale blue slim-fit oxford shirt.png',        bg:'#DBEAFE', badge:'Popular' },
+  { id:'m2',  name:'Stone Beige Chino Trousers',          desc:'Smart-casual must-have. Slim fit, tailored look.',              price:3500, img:'images/Stone beige chino trousers.png',             bg:'#FEF3C7' },
+  { id:'m3',  name:'Deep Navy Casual Polo Shirt',         desc:'Relaxed fit, high quality. Great for casual Fridays.',          price:2200, img:'images/Deep navy casual polo shirt.png',            bg:'#DBEAFE' },
+  { id:'m4',  name:'Light Sage Linen Short-Sleeve Shirt', desc:'Breathable linen — built for Sri Lanka\'s tropical climate.',   price:2600, img:'images/Light sage linen short-sleeve shirt.png',    bg:'#D1FAE5', badge:'New' },
+  { id:'m5',  name:'Dark Wash Slim Jeans',                desc:'Classic dark jeans. Versatile for any occasion.',               price:4200, img:'images/Dark wash slim jeans.png',                  bg:'#C7D2FE' },
+  { id:'m6',  name:'Charcoal Tailored Blazer',            desc:'Sharp & modern. Perfect for meetings and events.',              price:7500, img:'images/Charcoal tailored blazer.png',               bg:'#E5E7EB', badge:'Premium' },
+  { id:'m7',  name:'Heather Grey Tapered Jogger',         desc:'Comfortable everyday wear. Tapered leg, elastic waist.',        price:2400, img:'images/Heather grey tapered jogger.png',            bg:'#F3F4F6' },
+  { id:'m8',  name:'Rust Crew-Neck Sweatshirt',           desc:'Premium fleece. Relaxed fit. Great for cool evenings.',         price:3200, img:'images/Rust crew-neck sweatshirt.png',              bg:'#FEE2E2' },
+  { id:'m9',  name:'Black Tapered Cargo Trousers',        desc:'Utility-inspired style meets everyday comfort.',                price:3800, img:'images/Black tapered cargo trousers.png',           bg:'#D1D5DB', badge:'New' },
+  { id:'m10', name:'Camel Smart Casual Cardigan',         desc:'Refined layering piece. Office or weekend ready.',              price:3600, img:'images/Camel smart casual cardigan.png',            bg:'#FEF3C7' },
+  { id:'m11', name:'Classic Tan Harrington Jacket',       desc:'Timeless silhouette. Lightweight & easy to layer.',             price:5500, img:'images/Classic tan Harrington jacket.png',          bg:'#FDE68A', badge:'Popular' },
+  { id:'m12', name:'Dark Navy Tailored Wool Trousers',    desc:'Polished finish. Perfect for formal or smart-casual looks.',   price:4500, img:'images/Dark navy tailored wool trousers.png',       bg:'#DBEAFE' },
+  { id:'m13', name:'Forest Green Quarter-Zip Pullover',   desc:'Sporty & stylish. Great for layering in cool weather.',        price:3400, img:'images/Forest green quarter-zip pullover.png',      bg:'#D1FAE5' },
+  { id:'m14', name:'Mid-Blue Denim Trucker Jacket',       desc:'Classic denim jacket. A versatile wardrobe must-have.',        price:4800, img:'images/Mid-blue denim trucker jacket.png',          bg:'#BFDBFE' },
+  { id:'m15', name:'Oatmeal Knitted Polo Shirt',          desc:'Textured knit polo. Smart yet relaxed — effortless style.',    price:2900, img:'images/Oatmeal knitted polo shirt.png',             bg:'#FEF9C3' },
+  { id:'m16', name:'Off-White Casual Henley Shirt',       desc:'Relaxed Henley neckline. Minimalist everyday essential.',      price:2100, img:'images/Off-white casual henley shirt.png',          bg:'#F3F4F6' },
+  { id:'m17', name:'Olive Utility Lightweight Overshirt', desc:'Layering made easy. Shirt-jacket hybrid for any season.',      price:3300, img:'images/Olive utility lightweight overshirt.png',    bg:'#D1FAE5', badge:'New' },
+  { id:'m18', name:'Premium White Relaxed-Fit T-Shirt',   desc:'Elevated basics. Soft premium fabric, perfect fit.',           price:1800, img:'images/Premium white relaxed-fit t-shirt.png',      bg:'#F9FAFB' },
+  { id:'m19', name:'Sand-Colored Casual Shorts',          desc:'Lightweight & breathable. Ideal for Sri Lanka\'s climate.',    price:2000, img:'images/Sand-colored casual shorts.png',             bg:'#FEF3C7' },
+  { id:'m20', name:'Slate-Blue Utility Shirt Jacket',     desc:'Multi-pocket design with a modern utility aesthetic.',         price:4200, img:'images/Slate-blue utility shirt jacket.png',        bg:'#BFDBFE', badge:'Popular' },
+];
+
+const KIDS = [
+  // ── GIRLS ──────────────────────────────────────────────────────
+  { id:'g1',  name:"Girls' Floral Smocked Dress",         desc:'Sweet floral print. Elasticated smocking. Ages 3–12.',      price:2200, img:'images/Girls floral smocked dress.png',          bg:'#FECDD3', badge:'Girls' },
+  { id:'g2',  name:'Dusty Rose Tulle Party Dress',         desc:'Perfect for birthdays and special occasions. Ages 3–10.',   price:2800, img:'images/Dusty rose tulle party dress.png',         bg:'#FCE7F3', badge:'Girls' },
+  { id:'g3',  name:"Girls' Hoodie Dress in Blue",          desc:'Casual & cosy. Hooded dress for everyday wear. Ages 4–12.', price:1900, img:'images/Girls hoodie dress in blue.png',           bg:'#DBEAFE', badge:'Girls' },
+  { id:'g4',  name:"Girls' Terracotta Wide-Leg Jumpsuit",  desc:'Trendy & comfortable. Easy pull-on style. Ages 5–13.',      price:2500, img:'images/Girls terracotta wide-leg jumpsuit.png',   bg:'#FEE2E2', badge:'Girls' },
+  { id:'g5',  name:'Mid-Blue Denim Pinafore Dress',        desc:'Classic denim pinafore. Layer over tees. Ages 4–12.',       price:2400, img:'images/Mid-blue denim pinafore dress.png',        bg:'#BFDBFE', badge:'Girls' },
+  { id:'g6',  name:'Mint Green Girls Cardigan',            desc:'Soft knit. Great for layering. Ages 3–12.',                 price:1600, img:'images/Mint green girls cardigan.png',            bg:'#D1FAE5', badge:'Girls' },
+  { id:'g7',  name:"Blush Pink Girls' Pleated Skort",      desc:'Skirt + shorts combo. Active & stylish. Ages 4–12.',        price:1800, img:'images/Blush pink girls pleated skort.png',       bg:'#FECDD3', badge:'Girls' },
+  { id:'g8',  name:'Pastel Lavender Ruffle-Sleeve T-Shirt',desc:'Pretty ruffle detail. Soft cotton. Ages 3–12.',             price:1400, img:'images/Pastel lavender ruffle-sleeve t-shirt.png',bg:'#EDE9FE', badge:'Girls' },
+  { id:'g9',  name:'Girls Embroidered Cotton Blouse',      desc:'Delicate floral embroidery. Versatile & elegant. Ages 5–13.',price:2000, img:'images/Girls embroidered cotton blouse.png',     bg:'#FEF3C7', badge:'Girls' },
+  { id:'g10', name:'Classic Pale Blue Oxford Shirt',       desc:'Neat & polished for school or outings. Ages 4–13.',         price:1700, img:'images/Classic pale blue oxford shirt.png',       bg:'#DBEAFE', badge:'Girls' },
+  // ── BOYS ──────────────────────────────────────────────────────
+  { id:'b1',  name:"Boys' Olive Cargo Jogger Pants",       desc:'Practical cargo pockets. Comfortable tapered fit. Ages 4–13.',price:2000, img:'images/Boys olive cargo jogger pants.png',      bg:'#D1FAE5', badge:'Boys' },
+  { id:'b2',  name:"Boys' Beige Linen Co-ord Set",         desc:'Matching shirt + trousers. Perfect for occasions. Ages 3–12.',price:2800, img:'images/Boys beige linen co-ord set.png',        bg:'#FEF3C7', badge:'Boys' },
+  { id:'b3',  name:"Boys' Color-Block Polo Shirt",         desc:'Bold color-blocking. Great for everyday wear. Ages 3–12.',  price:1500, img:'images/Boys color-block polo shirt.png',          bg:'#FDE68A', badge:'Boys' },
+  { id:'b4',  name:"Boys' Navy and Rust Checked Shirt",    desc:'Classic plaid. Smart-casual style. Ages 4–13.',             price:1700, img:'images/Boys navy and rust checked shirt.png',     bg:'#BFDBFE', badge:'Boys' },
+  { id:'b5',  name:"Boys' Sand Beige Chino Shorts",        desc:'Smart casual shorts. Comfortable fit. Ages 4–13.',          price:1400, img:'images/Boys sand beige chino shorts.png',         bg:'#FEF9C3', badge:'Boys' },
+  { id:'b6',  name:'Forest Green Boys Varsity Jacket',     desc:'Cool varsity style. Great for layering. Ages 5–13.',        price:3200, img:'images/Forest green boys varsity jacket.png',     bg:'#D1FAE5', badge:'Boys' },
+  { id:'b7',  name:"Medium-Wash Boys' Denim Jacket",       desc:'Classic denim. A timeless staple. Ages 4–13.',              price:2600, img:'images/medium-wash boys denim jacket.png',        bg:'#BFDBFE', badge:'Boys' },
+  { id:'b8',  name:'Oatmeal Knit Crew-Neck Sweater',       desc:'Soft & warm knit sweater. Perfect for cooler days. Ages 3–12.',price:1800, img:'images/Oatmeal knit crew-neck sweater.png',  bg:'#FEF3C7', badge:'Boys' },
+  { id:'b9',  name:'Unisex Striped T-Shirt',               desc:'Bold stripes. Easy everyday wear for girls &amp; boys.',    price:1200, img:'images/Unisex striped t-shirt.png',              bg:'#DBEAFE', badge:'Unisex' },
+  { id:'b10', name:'Yellow Unisex Hoodie',                 desc:'Bright &amp; cheerful. Soft fleece. Ages 3–13.',            price:2200, img:'images/Yellow unisex hoodie.png',                bg:'#FEF3C7', badge:'Unisex' },
+];
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+let cart = [];
+let selPayMethod = 'cod';
+
+/* ══════════════════════════════════════════
+   DESIGNER DATA
+══════════════════════════════════════════ */
+const DESIGNER = [
+  {
+    id:'d1', name:'The Ivory Cascade Bridal Gown', tag:'Bridal',
+    desc:'A classic A-line silhouette with a cathedral-length train. Hand-embroidered floral lace bodice. Made to your measurements.',
+    price:'LKR 85,000 – 150,000',
+    emoji:'👰', grad:'linear-gradient(160deg,#2C2416,#4A3728)'
+  },
+  {
+    id:'d2', name:'Blush Ballgown with Tulle Layers', tag:'Wedding',
+    desc:'Romantic blush pink ball gown with layered tulle skirt and beaded sweetheart neckline. Perfect for a fairy-tale wedding.',
+    price:'LKR 75,000 – 130,000',
+    emoji:'🌸', grad:'linear-gradient(160deg,#3D1C2E,#5C2D42)'
+  },
+  {
+    id:'d3', name:'Deep Red Kandy Saree Gown Fusion', tag:'Bridal',
+    desc:'A fusion of traditional Kandyan bridal saree and modern gown silhouette. Gold hand-work embroidery throughout.',
+    price:'LKR 95,000 – 180,000',
+    emoji:'🪷', grad:'linear-gradient(160deg,#3D0A0A,#6B1414)'
+  },
+  {
+    id:'d4', name:'Minimalist Crepe Column Gown', tag:'Modern Bride',
+    desc:'Sleek, contemporary elegance. Silk crepe column gown with a plunging back. For the modern, understated bride.',
+    price:'LKR 60,000 – 110,000',
+    emoji:'🤍', grad:'linear-gradient(160deg,#1E1E2E,#2E2E4E)'
+  },
+  {
+    id:'d5', name:'The Golden Engagement Gown', tag:'Engagement',
+    desc:'Dramatic gold-embroidered evening gown with off-shoulder neckline and full skirt. A showstopper for your engagement night.',
+    price:'LKR 55,000 – 95,000',
+    emoji:'✨', grad:'linear-gradient(160deg,#2B2200,#4A3A00)'
+  },
+  {
+    id:'d6', name:'Bridesmaid Collection (Set of 4)', tag:'Bridesmaids',
+    desc:'Matching bridesmaid gowns in your chosen colour. Each piece tailored individually. Mix-and-match styles available.',
+    price:'LKR 18,000 – 35,000 / piece',
+    emoji:'💐', grad:'linear-gradient(160deg,#0D2B1F,#1A4D36)'
+  },
+  {
+    id:'d7', name:'Lace Mermaid Wedding Gown', tag:'Bridal',
+    desc:'Fitted mermaid silhouette with full lace overlay, chapel train, and long sleeves. Timeless and breathtaking.',
+    price:'LKR 90,000 – 160,000',
+    emoji:'🦢', grad:'linear-gradient(160deg,#1A1A2E,#2E2840)'
+  },
+  {
+    id:'d8', name:'Satin Off-Shoulder Prom Gown', tag:'Prom',
+    desc:'Elegant satin off-shoulder gown with a thigh-high slit. Available in any colour. Perfect for prom or formals.',
+    price:'LKR 30,000 – 55,000',
+    emoji:'🎀', grad:'linear-gradient(160deg,#2E0A3A,#4A1060)'
+  },
+  {
+    id:'d9', name:'Boho Chic Garden Wedding Dress', tag:'Wedding',
+    desc:'Free-spirited flowy bohemian gown with floral appliqués and flutter sleeves. For the garden or beach wedding.',
+    price:'LKR 50,000 – 85,000',
+    emoji:'🌿', grad:'linear-gradient(160deg,#0D2010,#1C3D1C)'
+  },
+  {
+    id:'d10', name:'Fully Bespoke — Your Design', tag:'Custom',
+    desc:'Have a design in your mind that isn\'t listed here? We create fully custom designs from scratch. Share your inspiration and we\'ll bring it to life.',
+    price:'Price on Consultation',
+    emoji:'✦', grad:'linear-gradient(160deg,#1A1A2E,#2B1A0F)'
+  },
+];
+
+
+function openEnquiry(designName) {
+  document.getElementById('enq-design-name').textContent = '✦ ' + designName;
+  document.getElementById('enq-overlay').classList.add('open');
+}
+function closeEnquiry() {
+  document.getElementById('enq-overlay').classList.remove('open');
+}
+function submitEnquiry() {
+  const fn = document.getElementById('enq-fn').value.trim();
+  const ph = document.getElementById('enq-ph').value.trim();
+  const em = document.getElementById('enq-em').value.trim();
+  const oc = document.getElementById('enq-occ').value;
+  if (!fn || !ph || !em || !oc) { alert('Please fill in Name, Phone, Email and Occasion Type.'); return; }
+  closeEnquiry();
+  document.getElementById('enq-confirm').classList.add('open');
+}
+function afterEnqConfirm() {
+  document.getElementById('enq-confirm').classList.remove('open');
+  // reset form
+  ['enq-fn','enq-ph','enq-em','enq-occ','enq-date','enq-budget','enq-bust','enq-waist','enq-hips','enq-height','enq-colour','enq-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════
+   RENDER PRODUCTS
+══════════════════════════════════════════ */
+function productHTML(p) {
+  const badgeHTML = p.badge ? `<span class="badge">${p.badge}</span>` : '';
+  const imgHTML = p.img
+    ? `<img src="${p.img}" alt="${p.name}" loading="lazy">`
+    : `<span class="emoji-placeholder">${p.emoji || '👗'}</span>`;
+  return `
+    <div class="product-card">
+      <div class="product-image" style="background:${p.bg}">
+        ${badgeHTML}${imgHTML}
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <span class="product-price">LKR ${p.price.toLocaleString()}</span>
+          <button class="add-btn" id="btn-${p.id}" onclick="addToCart('${p.id}')">+ Add to Cart</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderGrid(products, containerId) {
+  document.getElementById(containerId).innerHTML = products.map(productHTML).join('');
+}
+
+function renderFilters(categories, containerId, gridId, products) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = ['All', ...categories].map((c, i) =>
+    `<span class="filter-chip ${i===0?'active':''}" onclick="filterProducts(this,'${gridId}',${JSON.stringify(products).replace(/'/g,"\\'")},'${c}')">${c}</span>`
+  ).join('');
+}
+
+function filterProducts(chip, gridId, products, cat) {
+  document.querySelectorAll(`#${chip.parentElement.id} .filter-chip`).forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  const filtered = cat === 'All' ? products : products.filter(p => p.badge === cat || p.name.toLowerCase().includes(cat.toLowerCase()));
+  renderGrid(filtered.length ? filtered : products, gridId);
+}
+
+/* ══════════════════════════════════════════
+   CART
+══════════════════════════════════════════ */
+function addToCart(id) {
+  const p = [...WOMENS, ...MENS, ...KIDS].find(x => x.id === id);
+  if (!p) return;
+  const ex = cart.find(i => i.id === id);
+  ex ? ex.qty++ : cart.push({ ...p, qty: 1 });
+  refreshCart();
+  const btn = document.getElementById('btn-' + id);
+  if (btn) {
+    btn.textContent = '✓ Added!'; btn.classList.add('added');
+    setTimeout(() => { btn.textContent = '+ Add to Cart'; btn.classList.remove('added'); }, 1500);
+  }
+  showToast(`✅ ${p.name} added to cart!`);
+}
+
+function refreshCart() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cart-count').textContent = count;
+
+  const body   = document.getElementById('cart-body');
+  const footer = document.getElementById('cart-footer');
+
+  if (!cart.length) {
+    body.innerHTML = `<div class="empty-cart"><div class="eicon">🛍️</div><p>Your cart is empty.<br>Start shopping!</p></div>`;
+    footer.style.display = 'none';
+    return;
+  }
+
+  body.innerHTML = cart.map(i => `
+    <div class="cart-item">
+      <div class="ci-thumb" style="background:${i.bg};overflow:hidden;">${i.img ? `<img src="${i.img}" style="width:100%;height:100%;object-fit:cover;">` : (i.emoji||'👗')}</div>
+      <div class="ci-details">
+        <div class="ci-name">${i.name}</div>
+        <div class="ci-price">LKR ${(i.price * i.qty).toLocaleString()}</div>
+        <div class="ci-qty">
+          <button class="qty-btn" onclick="changeQty('${i.id}',-1)">−</button>
+          <span>${i.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${i.id}',1)">+</button>
+        </div>
+      </div>
+      <button class="ci-remove" onclick="removeItem('${i.id}')">✕</button>
+    </div>`).join('');
+
+  footer.style.display = 'block';
+  document.getElementById('cart-subtotal-val').textContent = `LKR ${total.toLocaleString()}`;
+
+  const rem = Math.max(0, 3000 - total);
+  const badge = document.getElementById('delivery-badge');
+  if (rem === 0) {
+    badge.textContent = '🎉 You qualify for FREE delivery!';
+    badge.style.cssText = 'background:#D1FAE5;color:#065F46;border-radius:8px;padding:.6rem;font-size:.82rem;text-align:center;margin-bottom:.8rem;font-weight:600;';
+  } else {
+    badge.innerHTML = `Add <b>LKR ${rem.toLocaleString()}</b> more for FREE delivery!`;
+    badge.style.cssText = 'background:#FEF3C7;color:#92400E;border-radius:8px;padding:.6rem;font-size:.82rem;text-align:center;margin-bottom:.8rem;font-weight:600;';
+  }
+}
+
+function changeQty(id, d) {
+  const i = cart.find(x => x.id === id);
+  if (!i) return;
+  i.qty += d;
+  if (i.qty <= 0) cart = cart.filter(x => x.id !== id);
+  refreshCart();
+}
+
+function removeItem(id) {
+  cart = cart.filter(x => x.id !== id);
+  refreshCart();
+  showToast('Item removed from cart.');
+}
+
+function openCart()  { document.getElementById('cart-overlay').classList.add('open'); }
+function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); }
+function overlayClose(e) { if (e.target === document.getElementById('cart-overlay')) closeCart(); }
+
+/* ══════════════════════════════════════════
+   CHECKOUT
+══════════════════════════════════════════ */
+function openCheckout() {
+  closeCart();
+  const total    = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const delivery = total >= 3000 ? 0 : 300;
+  document.getElementById('checkout-items').innerHTML = cart.map(i =>
+    `<div class="order-row"><span>${i.emoji} ${i.name} × ${i.qty}</span><span>LKR ${(i.price*i.qty).toLocaleString()}</span></div>`
+  ).join('');
+  document.getElementById('co-delivery').textContent = delivery === 0 ? 'FREE 🎉' : `LKR ${delivery}`;
+  document.getElementById('co-total').textContent    = `LKR ${(total + delivery).toLocaleString()}`;
+  document.getElementById('checkout-modal').classList.add('open');
+}
+
+function closeCheckout() { document.getElementById('checkout-modal').classList.remove('open'); }
+
+function selPay(el, type) {
+  document.querySelectorAll('.pay-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selPayMethod = type;
+}
+
+function placeOrder() {
+  const fn = document.getElementById('fn').value.trim();
+  const em = document.getElementById('em').value.trim();
+  const a1 = document.getElementById('a1').value.trim();
+  const ct = document.getElementById('ct').value.trim();
+  if (!fn || !em || !a1 || !ct) { alert('Please fill in all required fields (*)'); return; }
+  const num = 'DW-2026-' + (1000 + Math.floor(Math.random() * 9000));
+  document.getElementById('order-num').textContent = `Order #${num}`;
+  closeCheckout();
+  document.getElementById('confirm-modal').classList.add('open');
+  cart = [];
+  refreshCart();
+}
+
+function afterConfirm() {
+  document.getElementById('confirm-modal').classList.remove('open');
+  showPage('home');
+}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+renderGrid(WOMENS, 'womens-grid');
+renderGrid(MENS,   'mens-grid');
+renderGrid(KIDS,   'kids-grid');
+renderGrid([WOMENS[0], WOMENS[6], MENS[0], MENS[10], KIDS[0], KIDS[10]], 'featured-grid');
+renderFilters(['New','Popular','Premium'], 'womens-filters', 'womens-grid', WOMENS);
+renderFilters(['New','Popular','Premium'], 'mens-filters',   'mens-grid',   MENS);
+renderFilters(['Girls','Boys','Unisex'],   'kids-filters',   'kids-grid',   KIDS);
+
+</script>
+</body>
+</html>
